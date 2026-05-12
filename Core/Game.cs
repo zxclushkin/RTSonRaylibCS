@@ -19,9 +19,12 @@ public sealed class Game : IDisposable
     readonly InputController inputController;
     readonly Renderer3D renderer = new();
     readonly Hud hud = new();
+
     readonly GameMenu gameMenu = new();
     readonly SimpleSound sound = new();
     bool menuOpen;
+    readonly SimpleSound sound = new();
+
 
     public Game()
     {
@@ -55,6 +58,7 @@ public sealed class Game : IDisposable
             HandleMenuAction();
             return;
         }
+
 
         if (Raylib.IsMouseButtonPressed(MouseButton.Left) || Raylib.IsMouseButtonPressed(MouseButton.Right))
         {
