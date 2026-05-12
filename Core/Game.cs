@@ -1,4 +1,5 @@
 using Raylib_cs;
+using TinyRts.Audio;
 using TinyRts.Gameplay;
 using TinyRts.Input;
 using TinyRts.Rendering;
@@ -18,6 +19,7 @@ public sealed class Game : IDisposable
     readonly InputController inputController;
     readonly Renderer3D renderer = new();
     readonly Hud hud = new();
+    readonly SimpleSound sound = new();
 
     public Game()
     {
@@ -39,6 +41,11 @@ public sealed class Game : IDisposable
     void Update(float dt)
     {
         cameraController.Update(state.Map, dt);
+        if (Raylib.IsMouseButtonPressed(MouseButton.Left) || Raylib.IsMouseButtonPressed(MouseButton.Right))
+        {
+            sound.PlayClick();
+        }
+
         inputController.Update(state, cameraController);
         orcAiSystem.Update(state, commandSystem, dt);
         BuildingSystem.UpdateProduction(state, commandSystem, dt);
@@ -60,6 +67,7 @@ public sealed class Game : IDisposable
 
     public void Dispose()
     {
+        sound.Dispose();
         renderer.Dispose();
     }
 }
